@@ -8,6 +8,9 @@ app.get('/', (req, res) =>
 {
   res.sendFile(__dirname + '/index.html');
 });
+
+const path = require('path')
+app.use('/static', express.static(path.join(__dirname, 'public')))
     
 app.post('/', urlencodedParser, (req, res) => 
 {
@@ -18,12 +21,14 @@ app.post('/', urlencodedParser, (req, res) =>
             console.log(json)
            if(json.message=="Sorry pal, we couldn't find definitions for the word you were looking for.")
            {
-            res.send({message: "NO"});
+            // res.send({message: "NO"});
+            res.sendFile('/failure.html', {root: __dirname });
            }
             
           else
           {
-              res.send({message: "YES"});
+              // res.send({message: "YES"});
+              res.sendFile('/success.html', {root: __dirname });
           }
             
           });
